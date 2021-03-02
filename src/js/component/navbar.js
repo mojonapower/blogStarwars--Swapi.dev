@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react"; //*
+import { Context } from "../store/appContext"; //*
 import { Link } from "react-router-dom";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 
 export const Navbar = () => {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
+	const { store, actions } = useContext(Context);
 
 	const toggle = () => setDropdownOpen(prevState => !prevState);
 	return (
@@ -16,14 +18,21 @@ export const Navbar = () => {
 				<span className="navbar-brand mb-0 h1">React Starwars</span>
 			</Link>
 			<div className="mr-5">
-				<Dropdown isOpen={dropdownOpen} toggle={toggle}>
+				<Dropdown isOpen={dropdownOpen} toggle={toggle} color="primary">
 					<DropdownToggle caret>Favoritos</DropdownToggle>
 					<DropdownMenu>
 						<DropdownItem header>Tus Personas</DropdownItem>
-						<DropdownItem text>Favorites</DropdownItem>
+						{store.favorites.map((favorite, i) => {
+							if (favorite.type == "persona") {
+								return (
+									<div key={i}>
+										<DropdownItem text>{favorite.name}</DropdownItem>
+									</div>
+								);
+							}
+						})}
 						<DropdownItem divider />
 						<DropdownItem header>Tus planetas</DropdownItem>
-						<DropdownItem text>Favorites</DropdownItem>
 					</DropdownMenu>
 				</Dropdown>
 			</div>

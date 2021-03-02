@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Button from "../component/button";
+
 const CardPeople = props => {
 	const id = props.id;
 	let heart = "\u2665";
